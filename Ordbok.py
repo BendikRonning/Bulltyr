@@ -1,0 +1,1 @@
+CryptoListe = ["Bitcoin","Bitcoin Cash","Ethereum", "Litecoin","Ripple"]
