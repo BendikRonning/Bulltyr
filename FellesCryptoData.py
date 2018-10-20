@@ -28,3 +28,5 @@ cryptoer['Time of week'] = cryptoer['Day of week'].apply(lambda x: weekend[x])
 cryptoer['Day of week'] = cryptoer['Day of week'].apply(lambda x: days[x])
 cryptoer['Season'] = cryptoer['Month'].apply(lambda x: season[x])
 cryptoer['Month'] = cryptoer['Month'].apply(lambda x: months[x])
+
+cryptoer.columns = map(str.upper, cryptoer.columns)

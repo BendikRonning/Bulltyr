@@ -1,2 +1,3 @@
 CryptoListe = ["Bitcoin","Bitcoin Cash","Ethereum", "Litecoin","Ripple"]
-PosChange =["Is up","Gained","Rose", "Advanced","Progressed"]
+CryptoListe2 = ["Bitcoin","BitcoinCash","Ethereum", "Litecoin","Ripple"]
+PosChange =["Is up","Gained","Rose", "Advanced","Progressed","+"]
