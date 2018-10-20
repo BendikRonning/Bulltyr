@@ -219,11 +219,11 @@ def fargechart():
 
 ##  UTVIKLING:
 #fargechart()
-MACD_BULLBEAR()
 
 ##  FERIDGE:
-#scatterplot()
-#volumline()
-#MACD()
+MACD_BULLBEAR()
+scatterplot()
+volumline()
+MACD()
 candlestick()
 
