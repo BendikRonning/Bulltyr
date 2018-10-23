@@ -31,12 +31,32 @@ bilde_Logo = 'C:\\Users\\bendi\\OneDrive\\Pictures\\New folder\\Untitled.png'
 
 dfAlldata = df
 
-
 df = df.tail(90)
 medianVolume = ((df["VOLUME"].median())*(df["CLOSE"].median()))/1000000
 
 Selskapsnavn = str(df["INSTRUMENT"].iloc[-1])
 sistekurs = str(df["CLOSE"].iloc[-1])
+
+def kalkuler_rsi(pris, n=14):
+    delta = (pris-pris.shift(1)).fillna(0)
+    avg_of_gains = delta[1:n+1][delta > 0].sum() / n
+    avg_of_losses = -delta[1:n+1][delta < 0].sum() / n
+    rsi_series = pd.Series(0.0, delta.index)
+    up = lambda x: x if x > 0 else 0
+    down = lambda x: -x if x < 0 else 0
+    i = n+1
+    for d in delta[n+1:]:
+        avg_of_gains = ((avg_of_gains * (n-1)) + up(d)) / n
+        avg_of_losses = ((avg_of_losses * (n-1)) + down(d)) / n
+        if avg_of_losses != 0:
+            rs = avg_of_gains / avg_of_losses
+            rsi_series[i] = 100 - (100 / (1 + rs))
+        else:
+            rsi_series[i] = 100
+        i += 1
+    return rsi_series
+
+df["RSI"] = kalkuler_rsi(df["CLOSE"])
 
 def candlestick_ripple():
     from math import pi
@@ -718,7 +738,27 @@ def MACD_BULLBEAR():
 
     show(o)
 
+def RSI():
+    from bokeh.plotting import figure, output_file, show
+    from bokeh.models import BoxAnnotation
 
+    x = dfAlldata["Date"].tail(200)
+    y = dfAlldata["RSI"].tail(200)
+
+    RSI_now = round(df["RSI"].iloc[-1],3)
+
+    p = figure(plot_width=1000,plot_height=400,x_axis_type="datetime",title=str(Selskapsnavn[0])+" - RSI "+str(RSI_now))
+    p.line(x, y, line_color="black", line_width=3, legend="14-Day RSI")
+    p.line(x, 30, line_color="green", line_width=3, legend="Oversold")
+    p.line(x, 70, line_color="red", line_width=3, legend="Overbought")
+    p.toolbar.logo = None  # Fjerner Bokeh logoen fra chartet
+
+
+    output_file("candlestick.html", title="color_scatter.py example")
+
+    show(p)
+    
+    
 ##  UTVIKLING:
 candlestick_ripple()
 volumline_ripple()
