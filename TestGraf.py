@@ -2,6 +2,8 @@ from FellesCryptoData import cryptoer, Bitcoin, Ripple
 import seaborn as sns
 import matplotlib.pyplot as plt
 import Ordbok
+from scipy.misc import imread
+import matplotlib.cbook as cbook
 
 print(list(cryptoer.columns.values))
 ######################
@@ -31,8 +33,9 @@ RippleSTD = StandardDevList[4]
 
 print(Ordbok.CryptoListe[4]+" had a daily standard deviation of "+StandardDevList[4]+" percent")
 
-SisteMND = sns.stripplot(x="INSTRUMENT",y="CHANGE",data=Year2018Sept,jitter=True,dodge=True)
-
-
+datafile = cbook.get_sample_data('C:\\Users\\bendi\\OneDrive\\Pictures\\New folder\\Untitled.png')
+img = imread(datafile)
+sns.stripplot(x="YEAR",y="CLOSE",data=cryptoer,jitter=True,hue="INSTRUMENT",dodge=True)
+plt.imshow(img,extent=[min(cryptoer["CLOSE"]-1), max(cryptoer["CLOSE"]+1), min(cryptoer["CLOSE"]-1), max(cryptoer["CLOSE"]+1)])
 
 plt.show()
